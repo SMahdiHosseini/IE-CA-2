@@ -9,10 +9,12 @@ public class Actor extends Entity {
     String name;
     Date birthDate;
     String nationality;
+    String birthDate_string;
     public Actor(int _id, String _name, String _birthDate, String _nationality){
         id = String.valueOf(_id);
         name = _name;
         nationality = _nationality;
+        birthDate_string = _birthDate;
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             birthDate = formatter.parse(_birthDate);
@@ -29,6 +31,8 @@ public class Actor extends Entity {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("actorId", Integer.parseInt(id));
         jsonMap.put("name", name);
+        jsonMap.put("birthDate", birthDate_string);
+        jsonMap.put("nationality", nationality);
         return jsonMap;
     }
 }

@@ -16,6 +16,7 @@ public class Server {
         app.get("/movies", new MoviesHandler(iemdb));
         app.get("/movies/{movie_id}", new MovieHandler(iemdb));
         app.get("/watchList/{user_id}/{movie_id}", new WatchListHandler(iemdb));
+        app.get("/actors/{actor_id}", new ActorHandler(iemdb));
         iemdb.prepareIEMDB();
     }
 }
