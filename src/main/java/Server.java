@@ -15,6 +15,7 @@ public class Server {
         app.get("/", ctx -> ctx.result("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Welcome to IEMDB"));
         app.get("/movies", new MoviesHandler(iemdb));
         app.get("/movies/{movie_id}", new MovieHandler(iemdb));
+        app.get("/watchList/{user_id}/{movie_id}", new WatchListHandler(iemdb));
         iemdb.prepareIEMDB();
     }
 }

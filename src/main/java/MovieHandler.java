@@ -11,12 +11,7 @@ class MovieHandler implements Handler {
     }
     @Override
     public void handle(Context ctx) {
-        ArrayList<Map<String, Object>> moviesList = iemdb.getMoviesListJson();
-        String resultString = "";
-        for (Map<String, Object> stringObjectMap : moviesList) {
-            resultString = resultString.concat((String) stringObjectMap.get("name")).concat("\n");
-        }
-
-        ctx.result(resultString);
+        String pp = ctx.pathParam("movie_id");
+        ctx.result(pp);
     }
 }
