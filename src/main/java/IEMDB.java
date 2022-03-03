@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.eclipse.jetty.util.resource.JarResource;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
@@ -8,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -328,24 +331,55 @@ public class IEMDB {
             }
         }
     }
+    private ArrayList<Object> getItems(String args){
+        ArrayList<Object> result = new ArrayList<>();
 
-    public void prepareIEMDB() throws IOException {
-        URL url = new URL("http://138.197.181.131:5000/api/movies");
+        try {
+            result = new ObjectMapper().readValue(args, ArrayList.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private String getResponse(String apiURL) throws IOException {
+        URL url = new URL(apiURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-//        int responseCode = connection.getResponseCode();
-
-//        InputStream responseStream = connection.getInputStream();
-
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
-
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
         in.close();
 
-        System.out.println(response.toString());
+        return response.toString();
+    }
+
+    private void cloneItem(Method method, String url) throws IOException {
+        String response = getResponse(url);
+        ArrayList<Object> items = getItems(response);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (Object item : items){
+            try {
+                System.out.println(method.invoke(this, objectMapper.writeValueAsString(item)));
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void prepareIEMDB() throws IOException {
+        try {
+            cloneItem(IEMDB.class.getDeclaredMethod("addActor", String.class), "http://138.197.181.131:5000/api/actors");
+            cloneItem(IEMDB.class.getDeclaredMethod("addUser", String.class), "http://138.197.181.131:5000/api/users");
+            cloneItem(IEMDB.class.getDeclaredMethod("addMovie", String.class), "http://138.197.181.131:5000/api/movies");
+            cloneItem(IEMDB.class.getDeclaredMethod("addComment", String.class), "http://138.197.181.131:5000/api/comments");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 }
