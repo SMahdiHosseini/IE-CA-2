@@ -275,6 +275,13 @@ public class IEMDB {
         return makeResponse(true, result);
     }
 
+    public Map<String, Object> getActorJson(String actor_id){
+        Actor actor = (Actor) actors.getById(actor_id);
+        if (actor != null)
+            return actor.getJsonMap();
+        return null;
+    }
+
     public String handleCommand(String command){
         String[] splitedCommand = command.split(" ", 2);
 
