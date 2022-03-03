@@ -210,6 +210,10 @@ public class IEMDB {
         return makeResponse(true, moviesJsons);
     }
 
+    public ArrayList<Map<String, Object>> getMoviesListJson(){
+        return movies.getEntitiesJsons();
+    }
+
     private String getMovieById(String args){
         Map<String, Object> mapping = extractJsonToMap(args);
 

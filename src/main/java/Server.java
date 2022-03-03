@@ -7,12 +7,14 @@ import java.net.URL;
 
 public class Server {
     public static Javalin app;
-    private static IEMDB iemdb;
+    public static IEMDB iemdb;
 
     public static void main(String[] args) throws IOException {
-        app = Javalin.create().start(7070);
+        app = Javalin.create().start(5050);
         iemdb = new IEMDB();
         app.get("/", ctx -> ctx.result("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Welcome to IEMDB"));
+        app.get("/movies", new MoviesHandler(iemdb));
+        app.get("/movies/{movie_id}", new MovieHandler(iemdb));
         iemdb.prepareIEMDB();
     }
 }
