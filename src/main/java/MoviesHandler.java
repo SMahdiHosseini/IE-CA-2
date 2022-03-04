@@ -42,16 +42,15 @@ class MoviesHandler implements Handler {
                 "        </tr>\n";
         for (Map<String, Object> movie : moviesList) {
 //            resultString = resultString.concat((String) movie.get("name")).concat("\n");
-            System.out.println(String.join(" ,", (ArrayList<String>) movie.get("cast")));
             resultString +=
                             "        <tr>\n" +
                             "            <td>" + movie.get("name") + "</td>\n" +
                             "            <td>" + movie.get("summary") + "</td> \n" +
                             "            <td>" + movie.get("releaseDate") + "</td>\n" +
                             "            <td>" + movie.get("director") + "</td>\n" +
-                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("cast")) + "</td>\n" +
-                            "            <td>Drama, Romance</td>\n" +
-                            "            <td>Tom Hanks, Gray sinise</td>\n" +
+                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("writers")) + "</td>\n" +
+                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("genres")) + "</td>\n" +
+                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("actors")) + "</td>\n" +
                             "            <td>8.8</td>\n" +
                             "            <td>8</td>\n" +
                             "            <td>142</td>\n" +

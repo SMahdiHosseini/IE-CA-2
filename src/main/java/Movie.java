@@ -62,9 +62,16 @@ public class Movie extends Entity {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("movieId", Integer.parseInt(id));
         jsonMap.put("name", name);
+        jsonMap.put("summary", summary);
+        jsonMap.put("releaseDate", releaseDateString);
         jsonMap.put("director", director);
-        jsonMap.put("genres", genres.toArray());
+        jsonMap.put("writers", writers);
+        jsonMap.put("genres", genres);
+        jsonMap.put("cast", castJsons);
         jsonMap.put("rating", ratersCount==0?null:getRating());
+        jsonMap.put("duration", Integer.parseInt(duration));
+        jsonMap.put("ageLimit", ageLimit);
+        jsonMap.put("comments", comments);
         return jsonMap;
     }
 
