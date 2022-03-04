@@ -24,6 +24,7 @@ public class Server {
         app.get("/404/{message}", new NotFound());
         app.get("/403/{message}", new Forbidden());
         app.get("/200/{message}", new Success());
+        app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
         iemdb.prepareIEMDB();
     }
 }

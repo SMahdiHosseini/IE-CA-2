@@ -186,9 +186,7 @@ public class IEMDB {
                 return makeResponse(false, "AgeLimitError");
     }
 
-    private String removeFromWatchList(String args){
-        Map<String, Object> mapping = extractJsonToMap(args);
-
+    public String removeFromWatchList(Map<String, Object> mapping){
         Client user = (Client) users.getById((String) mapping.get("userEmail"));
         if (user == null)
             return makeResponse(false, "UserNotFound");
@@ -264,11 +262,10 @@ public class IEMDB {
         return result;
     }
 
-    private String getWatchList(String args){
-        Map<String, Object> mapping = extractJsonToMap(args);
+    public String getWatchList(String userEmail){
         Map<String, Object> result = new HashMap<>();
 
-        Client user = (Client) users.getById((String) mapping.get("userEmail"));
+        Client user = (Client) users.getById(userEmail);
         if (user == null)
             return makeResponse(false, "UserNotFound");
 
@@ -326,8 +323,8 @@ public class IEMDB {
 //        if (splitedCommand[0].equals("addToWatchList"))
 //            return this.addToWatchList(splitedCommand[1]);
 
-        if (splitedCommand[0].equals("removeFromWatchList"))
-            return this.removeFromWatchList(splitedCommand[1]);
+//        if (splitedCommand[0].equals("removeFromWatchList"))
+//            return this.removeFromWatchList(splitedCommand[1]);
 
         if (splitedCommand[0].equals("getMoviesList"))
             return this.getMoviesList();

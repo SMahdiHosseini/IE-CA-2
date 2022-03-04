@@ -21,7 +21,6 @@ public class AddToWatchlistHandler implements Handler {
         mapping.put("movieId", Integer.valueOf(ctx.pathParam("movie_id")));
 
         result = ServerUtils.extractJsonToMap(iemdb.addToWatchList(mapping));
-        System.out.println(result.get("data"));
 
         if ((boolean) result.get("success") == false){
             if (result.get("data").equals("UserNotFound"))
@@ -38,6 +37,6 @@ public class AddToWatchlistHandler implements Handler {
             return;
         }
 
-        ctx.redirect("/200/movie added to watchlist successfully");
+        ctx.redirect("/200/" + result.get("data"));
     }
 }
