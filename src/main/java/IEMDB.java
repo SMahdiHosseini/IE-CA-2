@@ -231,6 +231,7 @@ public class IEMDB {
                 return true;
         return false;
     }
+
     private ArrayList<Movie> findByGenre(String genre){
         ArrayList<Movie> result = new ArrayList<>();
         Movie movie;

@@ -66,7 +66,7 @@ public class ActorHandler implements Handler{
         String actor_id = ctx.pathParam("actor_id");
         Map<String, Object> actorJson = iemdb.getActorJson(actor_id);
         if (actorJson == null){
-            ctx.redirect("/404");
+            ctx.redirect("/404/ActorNotFound");
             return;
         }
 
