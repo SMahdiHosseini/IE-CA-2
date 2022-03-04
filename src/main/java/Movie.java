@@ -58,6 +58,13 @@ public class Movie extends Entity {
                 , String.valueOf(args.get("duration")), (Integer) args.get("ageLimit"));
     }
 
+    public boolean actedInThisMovie(Integer actor_id){
+        for (Integer cast_id : castIds)
+            if (cast_id == actor_id)
+                return true;
+        return false;
+    }
+
     public Map<String, Object> getJsonMap(){
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("movieId", Integer.parseInt(id));
@@ -89,6 +96,15 @@ public class Movie extends Entity {
         jsonMap.put("duration", Integer.parseInt(duration));
         jsonMap.put("ageLimit", ageLimit);
         jsonMap.put("comments", comments);
+        return jsonMap;
+    }
+
+    public Map<String, Object> getJsonForActor(){
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("movieId", Integer.parseInt(id));
+        jsonMap.put("name", name);
+        jsonMap.put("imdb Rate", imdbRate);
+        jsonMap.put("rating", ratersCount==0?null:getRating());
         return jsonMap;
     }
 
