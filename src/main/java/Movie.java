@@ -73,6 +73,7 @@ public class Movie extends Entity {
         jsonMap.put("releaseDate", releaseDateString);
         jsonMap.put("director", director);
         jsonMap.put("writers", writers);
+        jsonMap.put("imdb Rate", imdbRate);
         jsonMap.put("genres", genres);
         jsonMap.put("cast", castJsons);
         jsonMap.put("rating", ratersCount==0?null:getRating());

@@ -33,7 +33,7 @@ class MoviesHandler implements Handler {
                 "            <th>director</th>\n" +
                 "            <th>writers</th>\n" +
                 "            <th>genres</th>\n" +
-                "            <th>cast</th>\n" +
+//                "            <th>cast</th>\n" +
                 "            <th>imdb Rate</th>\n" +
                 "            <th>rating</th>\n" +
                 "            <th>duration</th>\n" +
@@ -41,7 +41,6 @@ class MoviesHandler implements Handler {
                 "            <th>Links</th>\n" +
                 "        </tr>\n";
         for (Map<String, Object> movie : moviesList) {
-//            resultString = resultString.concat((String) movie.get("name")).concat("\n");
             resultString +=
                             "        <tr>\n" +
                             "            <td>" + movie.get("name") + "</td>\n" +
@@ -50,12 +49,18 @@ class MoviesHandler implements Handler {
                             "            <td>" + movie.get("director") + "</td>\n" +
                             "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("writers")) + "</td>\n" +
                             "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("genres")) + "</td>\n" +
-                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("actors")) + "</td>\n" +
-                            "            <td>8.8</td>\n" +
-                            "            <td>8</td>\n" +
-                            "            <td>142</td>\n" +
-                            "            <td>9</td>\n" +
-                            "            <td><a href=\"/movies/01\">Link</a></td>\n" +
+//                            "            <td>" + String.join(" ,", ServerUtils.makeListActorName((ArrayList<Object>) movie.get("actors"))) + "</td>\n" +
+                            "            <td>" + movie.get("imdb Rate") + "</td>\n";
+                            if(movie.get("rating") != null)
+            resultString +=
+                            "            <td>" + (double) movie.get("rating") + "</td>\n" ;
+                            else
+            resultString +=
+                    "            <td>null</td>\n" ;
+            resultString +=
+                            "            <td>" + movie.get("duration") + "</td>\n" +
+                            "            <td>" + movie.get("ageLimit") + "</td>\n" +
+                            "            <td><a href=\"/movies/" + Integer.toString((int)movie.get("movieId")) + "\">Link</a></td>\n" +
                             "        </tr>\n";
         }
 
