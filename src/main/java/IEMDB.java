@@ -166,8 +166,8 @@ public class IEMDB {
         return makeResponse(true, "comment voted successfully");
     }
 
-    private String addToWatchList(String args){
-        Map<String, Object> mapping = extractJsonToMap(args);
+    public String addToWatchList(Map<String, Object> mapping){
+//        Map<String, Object> mapping = extractJsonToMap(args);
 
         Client user = (Client) users.getById((String) mapping.get("userEmail"));
         if (user == null)
@@ -183,7 +183,7 @@ public class IEMDB {
             else
                 return makeResponse(false, "MovieAlreadyExists");
         else
-            return makeResponse(false, "AgeLimitError");
+                return makeResponse(false, "AgeLimitError");
     }
 
     private String removeFromWatchList(String args){
@@ -323,8 +323,8 @@ public class IEMDB {
         if (splitedCommand[0].equals("voteComment"))
             return this.voteComment(splitedCommand[1]);
 
-        if (splitedCommand[0].equals("addToWatchList"))
-            return this.addToWatchList(splitedCommand[1]);
+//        if (splitedCommand[0].equals("addToWatchList"))
+//            return this.addToWatchList(splitedCommand[1]);
 
         if (splitedCommand[0].equals("removeFromWatchList"))
             return this.removeFromWatchList(splitedCommand[1]);
