@@ -275,11 +275,27 @@ public class IEMDB {
         return makeResponse(true, result);
     }
 
+    public Object getActedMovies(String actor_id){
+        ArrayList<Object> actedMoviesJson = new ArrayList<>();
+
+        for (int i = 0; i < movies.size(); i++){
+            Movie movie = (Movie) movies.getByIndex(i);
+            if (movie.actedInThisMovie(Integer.valueOf(actor_id)))
+                actedMoviesJson.add(movie.getJsonForActor());
+        }
+        return actedMoviesJson;
+    }
+
     public Map<String, Object> getActorJson(String actor_id){
         Actor actor = (Actor) actors.getById(actor_id);
-        if (actor != null)
-            return actor.getJsonMap();
-        return null;
+        Map<String, Object> actorJson = new HashMap<>();
+
+        if (actor == null)
+            return null;
+
+        actorJson = actor.getJsonMap();
+        actorJson.put("Movies", getActedMovies(actor_id));
+        return actorJson;
     }
 
     public String handleCommand(String command){
