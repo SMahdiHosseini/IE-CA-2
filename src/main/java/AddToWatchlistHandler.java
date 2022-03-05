@@ -15,10 +15,22 @@ public class AddToWatchlistHandler implements Handler {
 
     @Override
     public void handle(Context ctx) {
+        String user_id = "";
+        String movie_id = "";
         Map<String, Object> mapping = new HashMap<>();
         Map<String, Object> result = new HashMap<>();
-        mapping.put("userEmail", ctx.pathParam("user_id"));
-        mapping.put("movieId", Integer.valueOf(ctx.pathParam("movie_id")));
+
+        if (ctx.method() == "POST"){
+            user_id = ctx.formParam("user_id");
+            movie_id = ctx.formParam("movie_id");
+        }
+        else {
+            user_id = ctx.pathParam("user_id");
+            movie_id = ctx.pathParam("movie_id");
+        }
+
+        mapping.put("userEmail", user_id);
+        mapping.put("movieId", Integer.valueOf(movie_id));
 
         result = ServerUtils.extractJsonToMap(iemdb.addToWatchList(mapping));
 
@@ -37,6 +49,9 @@ public class AddToWatchlistHandler implements Handler {
             return;
         }
 
-        ctx.redirect("/200/" + result.get("data"));
+        if (ctx.method() == "POST")
+            ctx.redirect("/movies/" + movie_id);
+        else
+            ctx.redirect("/200/" + result.get("data"));
     }
 }

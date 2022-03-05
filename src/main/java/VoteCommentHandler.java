@@ -18,6 +18,7 @@ public class VoteCommentHandler implements Handler {
         String user_id = "";
         String comment_id = "";
         String vote = "";
+        String movie_id = "";
         Map<String, Object> mapping = new HashMap<>();
         Map<String, Object> result = new HashMap<>();
 
@@ -25,6 +26,7 @@ public class VoteCommentHandler implements Handler {
             user_id = ctx.formParam("user_id");
             comment_id = ctx.formParam("comment_id");
             vote = ctx.formParam("vote");
+            movie_id = ctx.formParam("movie_id");
         }
         else {
             user_id = ctx.pathParam("user_id");
@@ -50,6 +52,9 @@ public class VoteCommentHandler implements Handler {
             return;
         }
 
-        ctx.redirect("/200/" + result.get("data"));
+        if (ctx.method() == "POST")
+            ctx.redirect("/movies/" + movie_id);
+        else
+            ctx.redirect("/200/" + result.get("data"));
     }
 }
