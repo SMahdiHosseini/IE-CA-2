@@ -49,7 +49,7 @@ public class IEMDB {
 //        }
         return mapping;
     }
-    private String makeResponse(boolean success, Object data){
+    public String makeResponse(boolean success, Object data){
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> responseMap = new HashMap<>();
 

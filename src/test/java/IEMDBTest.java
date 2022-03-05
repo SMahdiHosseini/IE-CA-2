@@ -254,6 +254,7 @@ public class IEMDBTest {
             e.printStackTrace();
         }
     }
+
     @Test
     public void testGetMoviesByGenre_noMovieFound() {
         String actualResponse1 = iemdb.handleCommand("getMoviesByGenre {\"genre\": \"Drama2\"}");
@@ -329,6 +330,29 @@ public class IEMDBTest {
         String expectedResponse2 = "{\"success\": false, \"data\": \"MovieAlreadyExists\"}";
 
         try {
+            JSONAssert.assertEquals(expectedResponse1, actualResponse1, true);
+            JSONAssert.assertEquals(expectedResponse2, actualResponse2, true);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetMoviesByDate_happyScenario() {
+        iemdb.handleCommand("addActor {\"id\": 4, \"name\": \"Adrien Brody\", \"birthDate\": \"1973-04-14\", \"nationality\": \"American\"}");
+        iemdb.handleCommand("addActor {\"id\": 5, \"name\": \"Thomas Kretschmann\", \"birthDate\": \"1962-09-08\", \"nationality\": \"German\"}");
+        iemdb.handleCommand("addActor {\"id\": 6, \"name\": \"Frank Finlay\", \"birthDate\": \"1926-08-06\", \"nationality\": \"British\"}");
+        String actualAddMovieResponse = iemdb.handleCommand("addMovie {\"id\": 2, \"name\": \"The Pianist\", \"summary\": \"A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.\", \"releaseDate\": \"2002-05-24\", \"director\": \"Roman Polanski\", \"writers\": [\"Ronald Harwood\", \"Wladyslaw Szpilman\"], \"genres\": [\"Biography\", \"Drama\", \"Music\"], \"cast\": [4, 5, 6], \"imdbRate\": 8.5, \"duration\": 150, \"ageLimit\": 12}");
+        String expectedAddMovieResponse = "{\"success\": true, \"data\": \"Movie added successfully\"}";
+
+        String actualResponse1 = iemdb.makeResponse(true, iemdb.getMoviesByDate("2000", "2010"));
+        String expectedResponse1 = "{\"data\":[{\"summary\":\"A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.\",\"comments\":[],\"releaseDate\":\"2002-05-24\",\"director\":\"Roman Polanski\",\"rating\":null,\"movieId\":2,\"writers\":[\"Ronald Harwood\",\"Wladyslaw Szpilman\"],\"duration\":150,\"cast\":[{\"actorId\":4,\"nationality\":\"American\",\"name\":\"Adrien Brody\",\"birthDate\":\"1973-04-14\"},{\"actorId\":5,\"nationality\":\"German\",\"name\":\"Thomas Kretschmann\",\"birthDate\":\"1962-09-08\"},{\"actorId\":6,\"nationality\":\"British\",\"name\":\"Frank Finlay\",\"birthDate\":\"1926-08-06\"}],\"ageLimit\":12,\"genres\":[\"Biography\",\"Drama\",\"Music\"],\"name\":\"The Pianist\",\"imdb Rate\":8.5}],\"success\":true}\n";
+
+        String actualResponse2 = iemdb.makeResponse(true, iemdb.getMoviesByDate("1900", "2010"));
+        String expectedResponse2 = "{\"data\":[{\"summary\":\"The aging patriarch of an organized crime dynasty in postwar New York City transfers control of his clandestine empire to his reluctant youngest son.\",\"comments\":[],\"releaseDate\":\"1972-03-14\",\"director\":\"Francis Ford Coppola\",\"rating\":null,\"movieId\":1,\"writers\":[\"Mario Puzo\",\"Francis Ford Coppola\"],\"duration\":175,\"cast\":[{\"actorId\":1,\"nationality\":\"American\",\"name\":\"Marlon Brando\",\"birthDate\":\"1924-04-03\"},{\"actorId\":2,\"nationality\":\"American\",\"name\":\"Al Pacino\",\"birthDate\":\"1940-04-25\"},{\"actorId\":3,\"nationality\":\"American\",\"name\":\"James Caan\",\"birthDate\":\"1940-03-26\"}],\"ageLimit\":14,\"genres\":[\"Crime\",\"Drama\"],\"name\":\"The Godfather\",\"imdb Rate\":9.2},{\"summary\":\"A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.\",\"comments\":[],\"releaseDate\":\"2002-05-24\",\"director\":\"Roman Polanski\",\"rating\":null,\"movieId\":2,\"writers\":[\"Ronald Harwood\",\"Wladyslaw Szpilman\"],\"duration\":150,\"cast\":[{\"actorId\":4,\"nationality\":\"American\",\"name\":\"Adrien Brody\",\"birthDate\":\"1973-04-14\"},{\"actorId\":5,\"nationality\":\"German\",\"name\":\"Thomas Kretschmann\",\"birthDate\":\"1962-09-08\"},{\"actorId\":6,\"nationality\":\"British\",\"name\":\"Frank Finlay\",\"birthDate\":\"1926-08-06\"}],\"ageLimit\":12,\"genres\":[\"Biography\",\"Drama\",\"Music\"],\"name\":\"The Pianist\",\"imdb Rate\":8.5}],\"success\":true}\n";
+
+        try {
+            JSONAssert.assertEquals(expectedAddMovieResponse, actualAddMovieResponse, true);
             JSONAssert.assertEquals(expectedResponse1, actualResponse1, true);
             JSONAssert.assertEquals(expectedResponse2, actualResponse2, true);
         } catch (JSONException e) {
