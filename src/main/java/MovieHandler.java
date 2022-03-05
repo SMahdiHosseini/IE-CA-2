@@ -14,6 +14,11 @@ class MovieHandler implements Handler {
     public void handle(Context ctx) {
         String pp = ctx.pathParam("movie_id");
         Movie movie = iemdb.getMovie(pp);
+        if (movie == null){
+            ctx.redirect("/404/MovieNotFound");
+            return;
+        }
+
         movie.updateComment(iemdb.getCommentsJsons(movie.id));
         String resultString =
                 "<!DOCTYPE html>\n" +
@@ -40,7 +45,7 @@ class MovieHandler implements Handler {
                 "      <li id=\"director\">director: " + movie.director + "</li>\n" +
                 "      <li id=\"writers\">writers: " + String.join(", ", movie.writers) + "</li>\n" +
                 "      <li id=\"genres\">genres: " + String.join(", ", movie.genres) + "</li>\n" +
-                "      <li id=\"cast\">cast: Tom Hanks, Gray sinise</li>\n" +
+                "      <li id=\"cast\">cast:" +  String.join(",", ServerUtils.makeListActorName((ArrayList<Object>) movie.castJsons)) + "</li>\n" +
                 "      <li id=\"imdbRate\">imdb Rate: " + movie.imdbRate + "</li>\n" +
                 "      <li id=\"rating\">rating: " + movie.getRating() + "</li>\n" +
                 "      <li id=\"duration\">duration: " + movie.duration + " minutes</li>\n" +

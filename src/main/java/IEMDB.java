@@ -245,16 +245,14 @@ public class IEMDB {
         return result;
     }
 
-    private String getMoviesByGenre(String args){
-        Map<String, Object> mapping = extractJsonToMap(args);
+    public ArrayList<Map<String, Object>> getMoviesByGenre(String genre){
         ArrayList<Map<String, Object>> moviesJsons = new ArrayList<>();
         Map<String, Object> result = new HashMap<>();
 
-        for (Movie movie : findByGenre((String) mapping.get("genre")))
-            moviesJsons.add(movie.getJsonMap_genre());
+        for (Movie movie : findByGenre(genre))
+            moviesJsons.add(movie.getJsonMap());
 
-        result.put("MoviesListByGenre", moviesJsons);
-        return makeResponse(true, result);
+        return moviesJsons;
     }
 
     private ArrayList<Map<String, Object>> getWatchlistJson(Repository watchlist){
@@ -336,8 +334,8 @@ public class IEMDB {
         if (splitedCommand[0].equals("getMovieById"))
             return this.getMovieById(splitedCommand[1]);
 
-        if (splitedCommand[0].equals("getMoviesByGenre"))
-            return this.getMoviesByGenre(splitedCommand[1]);
+//        if (splitedCommand[0].equals("getMoviesByGenre"))
+//            return this.getMoviesByGenre(splitedCommand[1]);
 
         if (splitedCommand[0].equals("getWatchList"))
             return this.getWatchList(splitedCommand[1]);

@@ -11,7 +11,15 @@ class MoviesHandler implements Handler {
     }
     @Override
     public void handle(Context ctx) {
-        ArrayList<Map<String, Object>> moviesList = iemdb.getMoviesListJson();
+        ArrayList<Map<String, Object>> moviesList = new ArrayList<>();
+        if (ctx.path().contains("search"))
+            if (ctx.pathParam("genre") != null)
+                moviesList = iemdb.getMoviesByGenre(ctx.pathParam("genre"));
+//            else
+
+        else
+            moviesList = iemdb.getMoviesListJson();
+
         String resultString = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
@@ -33,7 +41,7 @@ class MoviesHandler implements Handler {
                 "            <th>director</th>\n" +
                 "            <th>writers</th>\n" +
                 "            <th>genres</th>\n" +
-//                "            <th>cast</th>\n" +
+                "            <th>cast</th>\n" +
                 "            <th>imdb Rate</th>\n" +
                 "            <th>rating</th>\n" +
                 "            <th>duration</th>\n" +
@@ -49,7 +57,7 @@ class MoviesHandler implements Handler {
                             "            <td>" + movie.get("director") + "</td>\n" +
                             "            <td>" + String.join(",", (ArrayList<String>) movie.get("writers")) + "</td>\n" +
                             "            <td>" + String.join(",", (ArrayList<String>) movie.get("genres")) + "</td>\n" +
-//                            "            <td>" + String.join(",", ServerUtils.makeListActorName((ArrayList<Object>) movie.get("actors"))) + "</td>\n" +
+                            "            <td>" + String.join(",", ServerUtils.makeListActorName((ArrayList<Object>) movie.get("cast"))) + "</td>\n" +
                             "            <td>" + movie.get("imdb Rate") + "</td>\n";
                             if(movie.get("rating") != null)
             resultString +=
