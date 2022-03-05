@@ -45,12 +45,13 @@ class MovieHandler implements Handler {
                 "      <li id=\"ageLimit\">ageLimit: " + movie.ageLimit + "</li>\n" +
                 "    </ul>\n" +
                 "\n" +
-                "    <label>Your ID:</label>\n" +
-                "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
-                "    <br><br>\n" +
-                "    <form action=\"\" method=\"POST\">\n" +
+                "    <form action=\"/form/rateMovie\" method=\"POST\">\n" +
+                        "    <label>Your ID:</label>\n" +
+                        "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
+                        "    <br><br>\n" +
                 "      <label>Rate(between 1 and 10):</label>\n" +
-                "      <input type=\"number\" id=\"quantity\" name=\"quantity\" min=\"1\" max=\"10\">\n" +
+                "      <input type=\"number\" id=\"rate\" name=\"rate\" min=\"1\" max=\"10\">\n" +
+                "      <input type=\"hidden\" id=\"movie_id\" name=\"movie_id\" value=\"" + movie.id + "\">\n" +
                 "      <button type=\"submit\">rate</button>\n" +
                 "    </form>\n" +
                 "    <br>\n" +

@@ -19,13 +19,14 @@ public class Server {
         app.get("/movies", new MoviesHandler(iemdb));
         app.get("/movies/{movie_id}", new MovieHandler(iemdb));
         app.get("/watchList/{user_id}", new WatchListHandler(iemdb));
-        app.get("/rateMovie/{user_id}/{movie_id}/{rate}", new rateHandler(iemdb));
+        app.get("/rateMovie/{user_id}/{movie_id}/{rate}", new RateHandler(iemdb));
         app.get("/actors/{actor_id}", new ActorHandler(iemdb));
         app.get("/watchList/{user_id}/{movie_id}", new AddToWatchlistHandler(iemdb));
         app.get("/404/{message}", new NotFound());
         app.get("/403/{message}", new Forbidden());
         app.get("/200/{message}", new Success());
         app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
+        app.post("/form/rateMovie", new RateHandler(iemdb));
         iemdb.prepareIEMDB();
     }
 }
