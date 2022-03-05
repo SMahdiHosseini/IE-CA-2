@@ -342,11 +342,11 @@ public class IEMDB {
         if (splitedCommand[0].equals("rateMovie"))
             return this.rateMovie(splitedCommand[1]);
 
-//        if (splitedCommand[0].equals("voteComment"))
-//            return this.voteComment(splitedCommand[1]);
+        if (splitedCommand[0].equals("voteComment"))
+            return this.voteComment(ServerUtils.extractJsonToMap(splitedCommand[1]));
 
-//        if (splitedCommand[0].equals("addToWatchList"))
-//            return this.addToWatchList(splitedCommand[1]);
+        if (splitedCommand[0].equals("addToWatchList"))
+            return this.addToWatchList(ServerUtils.extractJsonToMap(splitedCommand[1]));
 
 //        if (splitedCommand[0].equals("removeFromWatchList"))
 //            return this.removeFromWatchList(splitedCommand[1]);
@@ -357,11 +357,11 @@ public class IEMDB {
         if (splitedCommand[0].equals("getMovieById"))
             return this.getMovieById(splitedCommand[1]);
 
-//        if (splitedCommand[0].equals("getMoviesByGenre"))
-//            return this.getMoviesByGenre(splitedCommand[1]);
+        if (splitedCommand[0].equals("getMoviesByGenre"))
+            return makeResponse(true, this.getMoviesByGenre((String) ServerUtils.extractJsonToMap(splitedCommand[1]).get("genre")));
 
         if (splitedCommand[0].equals("getWatchList"))
-            return this.getWatchList(splitedCommand[1]);
+            return this.getWatchList((String) ServerUtils.extractJsonToMap(splitedCommand[1]).get("userEmail"));
 
         return makeResponse(false, "InvalidCommand");
     }
