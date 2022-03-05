@@ -13,10 +13,10 @@ class MoviesHandler implements Handler {
     public void handle(Context ctx) {
         ArrayList<Map<String, Object>> moviesList = new ArrayList<>();
         if (ctx.path().contains("search"))
-            if (ctx.pathParam("genre") != null)
+            if (ctx.pathParamMap().get("genre") != null)
                 moviesList = iemdb.getMoviesByGenre(ctx.pathParam("genre"));
-//            else
-
+            else
+                moviesList = iemdb.getMoviesByDate(ctx.pathParam("start_year"), ctx.pathParam("end_year"));
         else
             moviesList = iemdb.getMoviesListJson();
 

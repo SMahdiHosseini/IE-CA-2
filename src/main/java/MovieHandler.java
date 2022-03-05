@@ -80,10 +80,9 @@ class MovieHandler implements Handler {
                 "        <th></th>\n" +
                 "        <th></th>\n" +
                 "      </tr>\n";
-        System.out.println("comment count = " + movie.comments.size());
+
         for (int i = 0; i < movie.comments.size(); i++) {
             Comment comment = (Comment) movie.comments.get(i);
-            System.out.println(comment.id);
             resultString +=
                     "      <tr>\n" +
                     "        <td>" + comment.userId + "</td>\n" +

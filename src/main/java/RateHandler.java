@@ -33,7 +33,7 @@ class RateHandler implements Handler {
                 ctx.redirect("/movies/" + movie_id);
             }
         }else{
-            ctx.redirect("/403/{"+ response.get("data") +"}");
+            ctx.redirect("/403/"+ response.get("data"));
         }
     }
 }

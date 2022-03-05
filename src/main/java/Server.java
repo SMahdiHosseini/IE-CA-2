@@ -27,6 +27,7 @@ public class Server {
         app.get("/200/{message}", new Success());
         app.get("/voteComment/{user_id}/{comment_id}/{vote}", new VoteCommentHandler(iemdb));
         app.get("/movies/search/{genre}", new MoviesHandler(iemdb));
+        app.get("/movies/search/{start_year}/{end_year}", new MoviesHandler(iemdb));
 
         app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
         app.post("/form/rateMovie", new RateHandler(iemdb));
