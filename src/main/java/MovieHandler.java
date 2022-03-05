@@ -1,6 +1,7 @@
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ class MovieHandler implements Handler {
     public void handle(Context ctx) {
         String pp = ctx.pathParam("movie_id");
         Movie movie = iemdb.getMovie(pp);
+        movie.updateComment(iemdb.getCommentsJsons(movie.id));
         String resultString =
                 "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -48,14 +50,15 @@ class MovieHandler implements Handler {
                 "    <form action=\"/form/rateMovie\" method=\"POST\">\n" +
                         "    <label>Your ID:</label>\n" +
                         "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
-                        "    <br><br>\n" +
                 "      <label>Rate(between 1 and 10):</label>\n" +
                 "      <input type=\"number\" id=\"rate\" name=\"rate\" min=\"1\" max=\"10\">\n" +
                 "      <input type=\"hidden\" id=\"movie_id\" name=\"movie_id\" value=\"" + movie.id + "\">\n" +
                 "      <button type=\"submit\">rate</button>\n" +
                 "    </form>\n" +
                 "    <br>\n" +
-                "    <form action=\"\" method=\"POST\">\n" +
+                "    <form action=\"/form/addWatchList\" method=\"POST\">\n" +
+                        "    <label>Your ID:</label>\n" +
+                        "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
                 "      <button type=\"submit\">Add to WatchList</button>\n" +
                 "    </form>\n" +
                 "    <br />\n" +
@@ -65,91 +68,43 @@ class MovieHandler implements Handler {
                 "        <th>comment</th>\n" +
                 "        <th></th>\n" +
                 "        <th></th>\n" +
-                "      </tr>\n" +
-                "      <tr>\n" +
-                "        <td>@sara</td>\n" +
-                "        <td>Nice</td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">3</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"03\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">like</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">1</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"03\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">dislike</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "      </tr>\n" +
-                "      <tr>\n" +
-                "        <td>@mehdi</td>\n" +
-                "        <td>Good</td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">2</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"02\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">like</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">2</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"02\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">dislike</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "      </tr>\n" +
-                "      <tr>\n" +
-                "        <td>@jack</td>\n" +
-                "        <td>amazing</td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">3</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"01\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">like</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "        <td>\n" +
-                "          <form action=\"\" method=\"POST\">\n" +
-                "            <label for=\"\">5</label>\n" +
-                "            <input\n" +
-                "              id=\"form_comment_id\"\n" +
-                "              type=\"hidden\"\n" +
-                "              name=\"comment_id\"\n" +
-                "              value=\"01\"\n" +
-                "            />\n" +
-                "            <button type=\"submit\">dislike</button>\n" +
-                "          </form>\n" +
-                "        </td>\n" +
-                "      </tr>\n" +
+                "      </tr>\n";
+        System.out.println("comment count = " + movie.comments.size());
+        for (int i = 0; i < movie.comments.size(); i++) {
+            Comment comment = (Comment) movie.comments.get(i);
+            System.out.println(comment.id);
+            resultString +=
+                    "      <tr>\n" +
+                    "        <td>" + comment.userId + "</td>\n" +
+                    "        <td>" + comment.text + "</td>\n" +
+                    "        <td>\n" +
+                    "          <form action=\"/form/vote\" method=\"POST\">\n" +
+                            "    <label>Your ID:</label>\n" +
+                            "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
+                            "</td><td>" +
+                    "            <input\n" +
+                    "              id=\"form_comment_id\"\n" +
+                    "              type=\"hidden\"\n" +
+                    "              name=\"comment_id\"\n" +
+                    "              value=\"" + comment.id + "\"\n" +
+                    "            />\n" +
+                    "            <input\n" +
+                    "              id=\"movie_id\"\n" +
+                    "              type=\"hidden\"\n" +
+                    "              name=\"movie_id\"\n" +
+                    "              value=\"" + movie.id + "\"\n" +
+                    "            />\n" +
+                    "            <button name=\"vote\" type=\"submit\" value=\"1\">like</button>\n" +
+                    "            <label for=\"\">" + String.valueOf(comment.like) + "</label>\n" +
+                    "        </td>\n" +
+                    "        <td>\n" +
+                    "            <button name=\"vote\" type=\"submit\" value=\"-1\">dislike</button>\n" +
+                    "            <label for=\"\">" + String.valueOf(comment.dislike) + "</label>\n" +
+                    "          </form>\n" +
+                    "        </td>\n" +
+                    "      </tr>\n";
+        }
+        resultString +=
                 "    </table>\n" +
                 "  </body>\n" +
                 "</html>\n";

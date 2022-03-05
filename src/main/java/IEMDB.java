@@ -82,7 +82,7 @@ public class IEMDB {
         return result;
     }
 
-    private ArrayList<Object> getCommentsJsons(String movieId){
+    public ArrayList<Object> getCommentsJsons(String movieId){
         ArrayList<Object> result = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -90,7 +90,7 @@ public class IEMDB {
             Comment comment = (Comment) comments.getByIndex(i);
             if(!comment.movieId.equals(movieId))
                 continue;
-            result.add(comment.getJsonMap());
+            result.add(comment);
         }
         return result;
     }

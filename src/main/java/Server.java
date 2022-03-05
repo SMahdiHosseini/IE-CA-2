@@ -27,6 +27,8 @@ public class Server {
         app.get("/200/{message}", new Success());
         app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
         app.post("/form/rateMovie", new RateHandler(iemdb));
+        app.post("/form/addWatchList", new AddToWatchlistHandler(iemdb));
+//        app.post("/form/vote", new V)
         iemdb.prepareIEMDB();
     }
 }
