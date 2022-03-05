@@ -59,6 +59,12 @@ class MovieHandler implements Handler {
                 "    <form action=\"/form/addWatchList\" method=\"POST\">\n" +
                         "    <label>Your ID:</label>\n" +
                         "    <input type=\"text\" name=\"user_id\" value=\"\" />\n" +
+                            "<input\n" +
+                    "              id=\"movie_id\"\n" +
+                    "              type=\"hidden\"\n" +
+                    "              name=\"movie_id\"\n" +
+                    "              value=\"" + movie.id + "\"\n" +
+                    "            />\n" +
                 "      <button type=\"submit\">Add to WatchList</button>\n" +
                 "    </form>\n" +
                 "    <br />\n" +

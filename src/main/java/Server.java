@@ -29,7 +29,7 @@ public class Server {
         app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
         app.post("/form/rateMovie", new RateHandler(iemdb));
         app.post("/form/addWatchList", new AddToWatchlistHandler(iemdb));
-//        app.post("/form/vote", new V)
+        app.post("/form/vote", new VoteCommentHandler(iemdb));
         iemdb.prepareIEMDB();
     }
 }
