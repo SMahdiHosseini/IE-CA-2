@@ -14,6 +14,9 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class IEMDB {
@@ -164,6 +167,26 @@ public class IEMDB {
 
         comment.voteComment(mapping);
         return makeResponse(true, "comment voted successfully");
+    }
+
+    public ArrayList<Map<String, Object>> getMoviesByDate(String start, String end){
+        Date startingDate = null;
+        Date endingDate = null;
+        ArrayList<Map<String, Object>> result = new ArrayList<>();
+        DateFormat formatter = new SimpleDateFormat("yyyy");
+        try {
+            startingDate = formatter.parse(start);
+            endingDate = formatter.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < movies.size(); i++){
+            Movie movie = (Movie) movies.getByIndex(i);
+            if(movie.releaseDate.after(startingDate) && movie.releaseDate.before(endingDate)){
+                result.add(movie.getJsonMap());
+            }
+        }
+        return result;
     }
 
     public String addToWatchList(Map<String, Object> mapping){

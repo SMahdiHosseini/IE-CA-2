@@ -24,12 +24,16 @@ class RateHandler implements Handler {
             movie_id = ctx.pathParam("movie_id");
             user_id = ctx.pathParam("user_id");
             rate = ctx.pathParam("rate");
-        }
+        } // error handle null return
         Map<String, Object> response = ServerUtils.extractJsonToMap(iemdb.rateMovie("{\"score\":" + rate + ", \"movieId\":" + movie_id + ", \"userEmail\": \"" + user_id + "\"}"));
         if((boolean)response.get("success")){
-            ctx.redirect("/200/{done}");
+            if (ctx.method().equals("GET")) {
+                ctx.redirect("/200/{done}");
+            }else{
+                ctx.redirect("/movies/" + movie_id);
+            }
         }else{
-            ctx.redirect("/403/{wrong inputs}");
+            ctx.redirect("/403/{"+ response.get("data") +"}");
         }
     }
 }
