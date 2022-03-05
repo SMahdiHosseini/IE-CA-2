@@ -149,8 +149,8 @@ public class IEMDB {
         return makeResponse(true, "movie rated successfully");
     }
 
-    public String voteComment(String args){
-        Map<String, Object> mapping = extractJsonToMap(args);
+    public String voteComment(Map<String, Object> mapping){
+//        Map<String, Object> mapping = extractJsonToMap(args);
 
         if ((Integer) mapping.get("vote") != 1 && (Integer) mapping.get("vote") != 0 && (Integer) mapping.get("vote") != -1)
             return makeResponse(false, "InvalidVoteValue");
@@ -321,8 +321,8 @@ public class IEMDB {
         if (splitedCommand[0].equals("rateMovie"))
             return this.rateMovie(splitedCommand[1]);
 
-        if (splitedCommand[0].equals("voteComment"))
-            return this.voteComment(splitedCommand[1]);
+//        if (splitedCommand[0].equals("voteComment"))
+//            return this.voteComment(splitedCommand[1]);
 
 //        if (splitedCommand[0].equals("addToWatchList"))
 //            return this.addToWatchList(splitedCommand[1]);
