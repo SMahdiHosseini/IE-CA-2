@@ -122,7 +122,7 @@ public class Movie extends Entity {
         return jsonMap;
     }
 
-    private double getRating(){
+    public double getRating(){
         if(ratersCount == 0)
             return 0;
         double rating = (double) sumRating/ratersCount;

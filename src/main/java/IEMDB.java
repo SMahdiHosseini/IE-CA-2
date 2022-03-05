@@ -132,7 +132,7 @@ public class IEMDB {
         return makeResponse(true, "comment with id " + String.valueOf(newId) + " added successfully");
     }
 
-    private String rateMovie(String args){
+    public String rateMovie(String args){
         Map<String, Object> mapping = extractJsonToMap(args);
 
         if ((Integer) mapping.get("score") < 1 || (Integer) mapping.get("score") > 10)
@@ -149,7 +149,7 @@ public class IEMDB {
         return makeResponse(true, "movie rated successfully");
     }
 
-    private String voteComment(String args){
+    public String voteComment(String args){
         Map<String, Object> mapping = extractJsonToMap(args);
 
         if ((Integer) mapping.get("vote") != 1 && (Integer) mapping.get("vote") != 0 && (Integer) mapping.get("vote") != -1)
@@ -210,6 +210,10 @@ public class IEMDB {
 
     public ArrayList<Map<String, Object>> getMoviesListJson(){
         return movies.getEntitiesJsons();
+    }
+
+    public Movie getMovie(String movie_ID){
+        return (Movie) movies.getById(movie_ID);
     }
 
     private String getMovieById(String args){

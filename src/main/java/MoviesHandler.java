@@ -47,16 +47,16 @@ class MoviesHandler implements Handler {
                             "            <td>" + movie.get("summary") + "</td> \n" +
                             "            <td>" + movie.get("releaseDate") + "</td>\n" +
                             "            <td>" + movie.get("director") + "</td>\n" +
-                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("writers")) + "</td>\n" +
-                            "            <td>" + String.join(" ,", (ArrayList<String>) movie.get("genres")) + "</td>\n" +
-//                            "            <td>" + String.join(" ,", ServerUtils.makeListActorName((ArrayList<Object>) movie.get("actors"))) + "</td>\n" +
+                            "            <td>" + String.join(",", (ArrayList<String>) movie.get("writers")) + "</td>\n" +
+                            "            <td>" + String.join(",", (ArrayList<String>) movie.get("genres")) + "</td>\n" +
+//                            "            <td>" + String.join(",", ServerUtils.makeListActorName((ArrayList<Object>) movie.get("actors"))) + "</td>\n" +
                             "            <td>" + movie.get("imdb Rate") + "</td>\n";
                             if(movie.get("rating") != null)
             resultString +=
                             "            <td>" + (double) movie.get("rating") + "</td>\n" ;
                             else
             resultString +=
-                    "            <td>null</td>\n" ;
+                            "            <td>null</td>\n" ;
             resultString +=
                             "            <td>" + movie.get("duration") + "</td>\n" +
                             "            <td>" + movie.get("ageLimit") + "</td>\n" +
