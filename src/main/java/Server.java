@@ -25,6 +25,7 @@ public class Server {
         app.get("/404/{message}", new NotFound());
         app.get("/403/{message}", new Forbidden());
         app.get("/200/{message}", new Success());
+        app.get("/voteComment/{user_id}/{comment_id}/{vote}", new VoteCommentHandler(iemdb));
         app.post("/watchList/{user_id}", new RemoveFromWatchList(iemdb));
         app.post("/form/rateMovie", new RateHandler(iemdb));
         app.post("/form/addWatchList", new AddToWatchlistHandler(iemdb));
